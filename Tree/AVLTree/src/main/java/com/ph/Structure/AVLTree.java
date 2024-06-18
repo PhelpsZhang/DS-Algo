@@ -1,9 +1,10 @@
+package com.ph.Structure;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AVLTree<T extends Comparable<T>> {
     private TreeNode<T> root;
-    public List<T> list = new LinkedList<>();
+    // public List<T> list = new LinkedList<>();
 
     /* Get Node Height */
     public int getNodeHeight(TreeNode<T> node) {
@@ -129,11 +130,29 @@ public class AVLTree<T extends Comparable<T>> {
         return node;
     }
 
-    public void inorderTraversal(TreeNode<T> node) {
-        if(node == null) return;  
-        inorderTraversal(node.left);
+    public void preorderTraversal(TreeNode<T> node, List<T> list) {
+        if(node == null) return;
         list.add(node.value);
-        inorderTraversal(node.right);
+        inorderTraversal(node.left, list);
+        inorderTraversal(node.right, list);
+    }
+
+    public void inOrder(List<T> list) {
+        inorderTraversal(root, list);
+    }
+
+    private void inorderTraversal(TreeNode<T> node, List<T> list) {
+        if(node == null) return;  
+        inorderTraversal(node.left, list);
+        list.add(node.value);
+        inorderTraversal(node.right, list);
+    }
+
+    public void postorderTraversal(TreeNode<T> node, List<T> list) {
+        if(node == null) return;  
+        inorderTraversal(node.left, list);
+        inorderTraversal(node.right, list);
+        list.add(node.value);
     }
 
     public AVLTree(TreeNode<T> node) {
