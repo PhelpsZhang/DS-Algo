@@ -1,5 +1,4 @@
-package com.ph.test;
-
+package com.ph.Structure;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -9,23 +8,20 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import com.ph.Entity.Person;
-import com.ph.Structure.AVLTree;
-import com.ph.Structure.TreeNode;
 import com.ph.db.DatabaseUtils;
 
-
-public class Test {
-
-    public static void main(String[] args) {
-        Person p = new Person("Peter", 18, BigDecimal.valueOf(98));
-        Person p2 = new Person("Jack", 20, BigDecimal.valueOf(88));
-        System.out.println(p.toString());
-        System.out.println("hello world");
+public class BSTreeTest {
+    
+    @Test
+    public void testBST() {
+        // test function must be Public
+        System.out.println("Test BSTree Code");
 
         List<Person> list = new LinkedList<>();
-        TreeNode<Person> node = new TreeNode<Person>(p);
-        AVLTree<Person> avl = new AVLTree<Person>(node);
+        BSTree<Person> bst = new BSTree<>();
 
         try (Connection conn = DatabaseUtils.getConnection()) {
             Statement stmt = conn.createStatement();
@@ -36,22 +32,17 @@ public class Test {
                 int age = rs.getInt("age");
                 BigDecimal score = rs.getBigDecimal("score");
                 Person person = new Person(name, age, score);
-                avl.insert(person);
+                bst.insert(person);
                 list.add(person);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // for(Person e : list) {
-        //     System.out.println(e.toString());
-        //     avl.insert(e);
-        // }
         list.clear();
-        avl.inOrder(list);
-        System.out.println("Now, traversal of Tree");
-        for(Person ps : list) {
-            System.out.println(ps.toString());
+        bst.inOrder(list);
+        for (Person person : list) {
+            System.out.println(person.toString());
         }
     }
 }

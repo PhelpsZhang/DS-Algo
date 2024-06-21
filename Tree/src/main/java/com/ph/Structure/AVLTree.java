@@ -1,10 +1,16 @@
 package com.ph.Structure;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AVLTree<T extends Comparable<T>> {
     private TreeNode<T> root;
-    // public List<T> list = new LinkedList<>();
+
+    public AVLTree(TreeNode<T> node) {
+        this.root = node;
+    }
+
+    public AVLTree() {
+        this.root = null;
+    }
 
     /* Get Node Height */
     public int getNodeHeight(TreeNode<T> node) {
@@ -99,6 +105,19 @@ public class AVLTree<T extends Comparable<T>> {
         return node;
     }
 
+    public TreeNode<T> search(T value) {
+        TreeNode<T> cur = this.root;
+        while(cur != null) {
+            if (cur.value.compareTo(value) < 0) {
+                cur = cur.right;
+            } else if (cur.value.compareTo(value) > 0) {
+                cur = cur.left;
+            } else 
+                break;
+        }
+        return cur;
+    }
+
     public void remove(T value) {
         this.root = removeHelper(root, value);
     }
@@ -130,15 +149,24 @@ public class AVLTree<T extends Comparable<T>> {
         return node;
     }
 
+    public void preOrder(List<T> list) {
+        preorderTraversal(root, list);
+    }
+
+    public void inOrder(List<T> list) {
+        inorderTraversal(root, list);
+    }
+
+    public void postOrder(List<T> list) {
+        postorderTraversal(root, list);
+    }
+
+
     public void preorderTraversal(TreeNode<T> node, List<T> list) {
         if(node == null) return;
         list.add(node.value);
         inorderTraversal(node.left, list);
         inorderTraversal(node.right, list);
-    }
-
-    public void inOrder(List<T> list) {
-        inorderTraversal(root, list);
     }
 
     private void inorderTraversal(TreeNode<T> node, List<T> list) {
@@ -155,7 +183,5 @@ public class AVLTree<T extends Comparable<T>> {
         list.add(node.value);
     }
 
-    public AVLTree(TreeNode<T> node) {
-        this.root = node;
-    }
+
 }
