@@ -1,4 +1,4 @@
-package com.ph.Structure;
+package com.ph.Structure.Tree;
 
 public class RBTree<T extends Comparable<T>> {
     
