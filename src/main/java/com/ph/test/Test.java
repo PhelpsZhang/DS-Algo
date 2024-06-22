@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.ph.Entity.Person;
-import com.ph.Structure.AVLTree;
-import com.ph.Structure.TreeNode;
+import com.ph.Structure.Tree.AVLTree;
+import com.ph.Structure.Tree.TreeNode;
 import com.ph.db.DatabaseUtils;
 
 

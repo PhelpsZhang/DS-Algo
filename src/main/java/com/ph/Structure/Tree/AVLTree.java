@@ -1,4 +1,4 @@
-package com.ph.Structure;
+package com.ph.Structure.Tree;
 import java.util.List;
 
 public class AVLTree<T extends Comparable<T>> {

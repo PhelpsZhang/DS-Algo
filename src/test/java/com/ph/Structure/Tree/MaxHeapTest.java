@@ -1,4 +1,4 @@
-package com.ph.Structure;
+package com.ph.Structure.Tree;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
-
-import com.ph.Structure.MaxHeap;
 
 import org.junit.jupiter.api.Test;
 
