@@ -14,7 +14,6 @@ public class BSTree<T extends Comparable<T>> {
      * remove
      */
 
-    
     public BSTree(TreeNode<T> node) {
         this.root = node;
     }
