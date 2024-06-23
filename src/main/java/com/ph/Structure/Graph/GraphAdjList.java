@@ -2,8 +2,12 @@ package com.ph.Structure.Graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 import com.ph.Entity.Person;
 
@@ -65,6 +69,57 @@ public class GraphAdjList<T extends Comparable<T>> {
                 tmp.add(vertex.value);
             System.out.println(pair.getKey().value + ": " + tmp + ",");
         }
+    }
+
+    public List<Vertex<T>> graphBFS(Vertex<T> startVet) {
+        // Vertex traversal
+        List<Vertex<T>> res = new ArrayList<>();
+        // Hash Set, record the visited vertex
+        Set<Vertex<T>> visited = new HashSet<>();
+        visited.add(startVet);
+        // Queue to implement BFS
+        Queue<Vertex<T>> que = new LinkedList<>();
+        que.offer(startVet);
+        // 以startVet为起点
+        while (!que.isEmpty()) {
+            // 队首顶点出队
+            Vertex<T> vet = que.poll();
+            // 记录访问顶点
+            res.add(vet);
+            // 遍历该顶点的所有adjacency vertex
+            for (Vertex<T> adjVet : this.adjList.get(vet)) {
+                // 如果该顶点已被访问，就跳过
+                if (visited.contains(adjVet))
+                    continue;
+                // 未被访问过的顶点，入队
+                que.offer(adjVet);
+                // 标记该顶点为已访问。
+                visited.add(adjVet);
+            }
+        }
+        return res;
+    }
+
+    private void dfs(Set<Vertex<T>> visited, List<Vertex<T>> res, Vertex<T> vet) {
+        // 记录访问顶点
+        res.add(vet);
+        // 标记该顶点已被访问
+        visited.add(vet);
+        // 遍历该顶点所有adjacency顶点
+        for (Vertex<T> adjVet : this.adjList.get(vet)) {
+            if (visited.contains(adjVet))
+                continue;
+            dfs(visited, res, adjVet);
+        }
+    }
+
+    public List<Vertex<T>> graphDFS(Vertex<T> startVet) {
+        // 顶点遍历序列
+        List<Vertex<T>> res = new ArrayList<>();
+        // 哈希集合，记录已被访问过的顶点
+        Set<Vertex<T>> visited = new HashSet<>();
+        dfs(visited, res, startVet);
+        return res;
     }
 
 }

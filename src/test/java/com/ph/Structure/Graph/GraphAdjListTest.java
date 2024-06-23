@@ -35,5 +35,25 @@ public class GraphAdjListTest {
         GraphAdjList<Person> graph = new GraphAdjList<>(va);
         graph.print();
 
+        System.out.println("BFS start from v0");
+        for (Vertex<Person> e : graph.graphBFS(v0)) {
+            System.out.println(e.value.toString());
+        }
+
+        System.out.println("BFS start from v3");
+        for (Vertex<Person> e : graph.graphBFS(v3)) {
+            System.out.println(e.value.toString());
+        }
+
+        System.out.println("DFS start from v3");
+        for (Vertex<Person> e : graph.graphDFS(v3)) {
+            System.out.println(e.value.toString());
+        }
+
+        System.out.println("DFS start from v0");
+        for (Vertex<Person> e : graph.graphDFS(v0)) {
+            System.out.println(e.value.toString());
+        }
+        
     }
 }
