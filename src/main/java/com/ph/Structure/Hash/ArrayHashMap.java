@@ -3,15 +3,16 @@ package com.ph.Structure.Hash;
 import java.util.ArrayList;
 import java.util.List;
 
-// 这个arrayHashMap，哈希【冲突】的要死。
-// 冲突了怎么办？基于数组的实现就只能扩容，而扩容是很耗时的。
+// 这个arrayHashMap，哈希【冲突】的要死。因为每个桶只能存储一个key-value对。
+// 冲突了怎么办？当前基于数组每个位置放一个pair的实现就只能扩容，而扩容是很耗时的。
 // 即需要把所有键值对从原哈希表迁移到新哈希表。并且由于哈希表容量改变，我们被迫要通过hashFunc重新计算所有键值对的存储位置。
 // 所以需要预留足够大的哈希表容量，防止频繁扩容
 // 负载因子：load factor
 public class ArrayHashMap<T extends Comparable<T>, V extends Comparable<V>> {
     
-    // 注意，数组的实现方式，这里用了List。
-    // 但是千万不要下意识用List的API！我们实现的是HashMap！
+    // 注意，这里List中的每个元素都是一个Pair，即只能储存一个元素。
+    // 我们buckets一定是要用ArrayList而不是LinkedList的，只有这样我们才能通过【索引】快速定位元素。
+    // 但是千万不要下意识用List的容器式的插入删除查找的API！我们实现的是HashMap！
     // 增删改查是要通过直接【索引访问】提高效率的O(1)，不是用List的O(n)
     private List<Pair<T, V>> buckets;
     // 这里指定给100个桶. not static

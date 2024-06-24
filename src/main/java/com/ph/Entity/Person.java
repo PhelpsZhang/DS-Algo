@@ -15,6 +15,18 @@ public class Person implements Comparable<Person> {
         this.score = score;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
     public void setScore(BigDecimal score) {
         this.score = score;
     }
