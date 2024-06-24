@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 import com.ph.Entity.Person;
 
@@ -119,6 +120,38 @@ public class GraphAdjList<T extends Comparable<T>> {
         // 哈希集合，记录已被访问过的顶点
         Set<Vertex<T>> visited = new HashSet<>();
         dfs(visited, res, startVet);
+        return res;
+    }
+
+    // 手写一个迭代实现
+    public List<Vertex<T>> graphDFSIter(Vertex<T> startVet) {
+        // 顶点遍历序列
+        List<Vertex<T>> res = new ArrayList<>();
+        // 哈希集合，记录已被访问过的顶点
+        Set<Vertex<T>> visited = new HashSet<>();
+        // Stack数据结构来实现深度优先
+        Stack<Vertex<T>> stk = new Stack<>();
+        stk.push(startVet);
+        while (!stk.isEmpty()) {
+            // get vertex
+            Vertex<T> vet = stk.pop();
+            if (!visited.contains(vet)) {
+                // record
+                res.add(vet);
+                visited.add(vet);
+                // 【注意这里】，是添加结果后才标记一个vet为visited
+                // 已经visited的vet不会被push进栈
+                // 没有被visited的vet可能会被多次push进栈
+                // 我们在入栈阶段允许重复，而在出战阶段判定是否visited。
+                // 这样才能保证是深度优先。
+                for (Vertex<T> adjVet : this.adjList.get(vet)) {
+                    if (!visited.contains(adjVet)) {
+                        // System.out.println("找到当前节点"+ vet.value +"的adj vertex：" + adjVet.value);
+                        stk.push(adjVet);
+                    }
+                }
+            }
+        }
         return res;
     }
 
