@@ -183,7 +183,7 @@ public class SortingAlgo<T extends Comparable<T>> {
         for (int i = left; i <= right - 1; i++) {
             if (nums[i].compareTo(pivot) < 0) {
                 // 发现了小于pivot的值，就把该新值加在右边界，右边界也因此向右扩张一位。
-                i++;
+                index++;
                 swap(nums, index, i);
             }
         }
