@@ -1,5 +1,6 @@
 package com.ph.Algo.Sorting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SortingAlgo<T extends Comparable<T>> {
@@ -294,5 +295,96 @@ public class SortingAlgo<T extends Comparable<T>> {
         quickSortHelperHoares(nums, 0, len - 1);
     }
     
+    private void merge(T[] nums, int left, int mid, int right) {
+        // 左段是[left, mid],右段是[mid+1, right]
+        // 一个tmp用于存放合并后的结果。
+        // T[] tmps = new T[right-left+1]; // 泛型不能这样玩，暂时用List
+        List<T> temp = new ArrayList<>(right-left+1);
+        int i = left, j = mid+1;
+        while (i <= mid && j <= right) {
+            if (nums[i].compareTo(nums[j]) > 0) {
+                // List没有值不能set，应该默认add
+                temp.add(nums[j++]);
+            } else {
+                temp.add(nums[i++]);
+            }
+        }
+        // 处理剩余的元素
+        while (i <= mid) {
+            temp.add(nums[i++]);
+        }
+        while (j <= right) {
+            temp.add(nums[j++]);
+        }
+        // 元素放回去
+        for (int k = 0; k < temp.size(); k++) {
+            nums[left+k] = temp.get(k);
+        }
+    }
+
+    public void mergeSortHelper(T[] nums, int left, int right) {
+        // 终止条件
+        if (left >= right)
+            return;
+        int mid = left + (right - left) / 2;
+        // 划分阶段
+        mergeSortHelper(nums, left, mid);
+        mergeSortHelper(nums, mid+1, right);
+        // 合并阶段
+        merge(nums, left, mid, right);
+    }
+
+    /*
+     * TC: O(NlogN)
+     * Non-Adaptive: 产生高度为logN的递归树。
+     * SC: O(N)。递归深度为logN，使用O(logN)的栈帧空间。合并操作需要额外的辅助数组，占O(N)
+     * Non In-Place:非原地排序。
+     * Stable: 排序过程中不打乱相等元素的原始顺序
+     */
+    public void mergeSort(T[] nums, boolean ascending) {
+        mergeSortHelper(nums, 0, nums.length - 1);
+    }
+
+    private void siftDown(T[] nums, int n, int inode) {
+        // 堆长度为n，从节点inode开始自顶向下堆化。
+        while (true) {
+            int l = inode * 2 + 1;
+            int r = inode * 2 + 2;
+            int mark = inode;
+            // 左子节点比当前值大
+            if (l < n && nums[l].compareTo(nums[mark]) > 0) {
+                mark = l;
+            }
+            // 右子节点比当前值大
+            if (r < n && nums[r].compareTo(nums[mark]) > 0) {
+                mark = r;
+            }
+            // 如果节点inode最大，或者索引l,r越界，则无需继续堆化
+            if (mark == inode)
+                break;
+            swap(nums, inode, mark);
+            // 循环向下堆化
+            inode = mark;
+        }
+    }
+
+    /*
+     * TC: O(NlogN)
+     * Non-Adaptive:建堆用了O(N)，堆里提取最大元素O(LogN)，循环n-1轮
+     * SC:O(1)
+     * In-place: 元素和堆化都是在原数组上进行的
+     * Non-Stable:交换堆顶和堆底元素时，可能无法保证stable
+     */
+    public void heapSort(T[] nums, boolean ascending) {
+        // 建堆。堆化除了叶节点以外的所有其他节点
+        for (int i = nums.length/2 - 1; i >= 0; i--) {
+            siftDown(nums, nums.length, i);
+        }
+        // 从堆中提取最大元素，循环n-1轮。
+        for (int i = nums.length - 1; i > 0; i--) {
+            swap(nums, 0, i);
+            siftDown(nums, i, 0);
+        }
+    }
     
 }

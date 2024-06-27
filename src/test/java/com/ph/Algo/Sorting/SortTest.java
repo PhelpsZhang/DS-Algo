@@ -36,8 +36,20 @@ public class SortTest {
         // }
 
 
-        System.out.println("Test Quick Sort");
-        sa.quickSort(persons, true);
+        // System.out.println("Test Quick Sort");
+        // sa.quickSort(persons, true);
+        // for (Person p : persons) {
+        //     System.out.println(p.toString());
+        // }
+
+        // System.out.println("Test Merge Sort");
+        // sa.mergeSort(persons, true);
+        // for (Person p : persons) {
+        //     System.out.println(p.toString());
+        // }
+
+        System.out.println("Test Heap Sort");
+        sa.heapSort(persons, true);
         for (Person p : persons) {
             System.out.println(p.toString());
         }
