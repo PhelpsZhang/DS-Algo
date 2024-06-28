@@ -53,5 +53,12 @@ public class SortTest {
         for (Person p : persons) {
             System.out.println(p.toString());
         }
+
+        System.out.println("Test Bucket Sort");
+        double[] dn = {0.364, 0.99, 0.257, 0.100, 0.3, 0.253, 0.885, 0.462, 0.9993, 0.629};
+        sa.bucketSort(dn);
+        for (double e : dn) {
+            System.out.println(e);
+        }
     }
 }

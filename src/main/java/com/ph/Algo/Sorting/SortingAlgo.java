@@ -1,6 +1,7 @@
 package com.ph.Algo.Sorting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SortingAlgo<T extends Comparable<T>> {
@@ -386,5 +387,63 @@ public class SortingAlgo<T extends Comparable<T>> {
             siftDown(nums, i, 0);
         }
     }
+
+    // 桶排序简单实现
+    public void bucketSort(double[] nums) {
+        // 初始化k = n/2个桶，预期向每个桶里分配2个元素
+        int k = nums.length / 2;
+        List<List<Double>> buckets = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            buckets.add(new ArrayList<>());
+        }
+        // 将数据元素分配到各个桶中
+        for (double num : nums) {
+            // 输入数据范围为[0, 1)，所以把数据num乘k，映射到索引范围[0, k-1]
+            buckets.get((int)(k * num)).add(num);
+        }
+        // 对每个桶进行排序
+        for (List<Double> bucket : buckets) {
+            // 找个传统排序算法（比如内置排序算法）
+            Collections.sort(bucket);
+        }
+        // 将桶合并
+        int i = 0;
+        for (List<Double> bucket : buckets) {
+            for (double num : bucket) {
+                nums[i++] = num;
+            }
+        }
+    }
+
+    /*
+     * 计数排序 简单实现（这里的计数排序其实就是桶排序的 一个特例）
+     * 要求数组必须是整数，这里直接用【非负整数】
+     */
+    public void countingSortNaive(int[] nums) {
+        // 统计最大元素m
+        int len = nums.length;
+        if (len == 0 || len == 1) return;
+        int m = 0;
+        for (int num : nums) {
+            m = Math.max(m, num);
+        }
+
+        // 使用counter辅助函数
+        int[] counter = new int[m+1];
+        for (int num : nums) {
+            counter[num]++;
+        }
+
+        int i = 0;
+        for (int num = 0; num < m + 1; num++) {
+            for (int j = 0; j < counter[num]; j++, i++) {
+                nums[i] = num;
+            }
+        }
+
+    }
+
+
+    
     
 }
